@@ -1,0 +1,41 @@
+<?xml version ="1.0" ?>
+
+<launch>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find mapping_bot)/terrains/worlds/terrain_1.world"/>
+    <arg name="gui" value="true"/>
+    <arg name="paused" value="true"/>
+  </include>
+
+    <param name="robot_description"
+    command="$(find xacro)/xacro '$(find mapping_bot)/urdf/robot.xacro'"/>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" 
+    type="robot_state_publisher"/>
+
+    <node name="urdf_spawner" pkg="gazebo_ros" 
+    type="spawn_model" respawn="false" output="screen"
+    args="-urdf -model robby -param robot_description"/>
+
+  <!--  <node name="deviation_calculator" pkg="autonavbot" type="deviation_node.py" output="screen"/>
+
+    <node name="twist_publisher" pkg="autonavbot" type="twist_publisher.py" output="screen"/>
+
+    <include file="$(find autonavbot)/controller/pid.launch">
+    </include>
+-->
+
+  <include file="$(find mapping_bot)/launch/robot_rviz.launch">
+    </include>
+ 
+
+    <!-- <node name="accn_transformed_imu_odom" pkg="autonavbot" type="xfm_accn.py" output="screen"/>
+
+    <node name="accn_to_speed" pkg="autonavbot" type="accn_to_speed.py" output="screen"/>
+    <node name="speed_to_pos" pkg="autonavbot" type="speed_to_pos.py" output="screen"/> -->
+
+
+
+
+</launch>
